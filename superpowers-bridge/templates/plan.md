@@ -13,5 +13,5 @@
 
 ## Task 1: <!-- Component Name -->
 
-- [ ] **Step 1:** <!-- micro-step -->
-- [ ] **Step 2:** <!-- micro-step -->
+- [ ] **Step 1:** <!-- step with a checkable result -->
+- [ ] **Step 2:** <!-- step with a checkable result -->

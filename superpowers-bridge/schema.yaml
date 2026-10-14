@@ -13,9 +13,9 @@ description: >
   Each artifact / apply step verifies its required skills before
   invoking and surfaces a clear error if any are missing.
   brainstorm → proposal → specs → tasks → plan → verify → retrospective.
-  design is required (reorganizes raw brainstorm output into structured
-  Context / Goals / Decisions / Risks / Migration; referenced by tasks
-  and plan for implementation guidance).
+  design is required (completes the brainstorm output with structured
+  Context / Goals / Decisions / Risks / Migration where it is silent;
+  referenced by tasks and plan for implementation guidance).
   Apply phase uses git worktrees + subagent-driven-development
   (brings TDD and code-review transitively).
 
@@ -37,23 +37,33 @@ artifacts:
       IMPORTANT output redirection:
       - Do NOT write to `docs/superpowers/specs/`. Instead, write the
         brainstorming output directly to this change's `brainstorm.md`.
-      - brainstorm.md is a RAW CAPTURE — write the brainstorming
-        skill's full output as-is, without forcing any template
-        structure. The skill's natural output is typically a decision
-        log (background → decision chain Q1-Qn → design trade-offs),
-        but the format varies by conversation. Preserve the skill's
-        natural organization.
+      - brainstorm.md is a RAW CAPTURE — write what the brainstorming
+        skill agreed with the user as-is, without forcing any template
+        structure. Superpowers 6.x tends to produce a decision log;
+        7+ writes a design document. Preserve the skill's organization.
+      - If that description was already agreed earlier in this session,
+        record it here; do not restart the skill's interview.
       - Do NOT pre-fill design.md during this step. design.md is a
-        separate artifact that reorganizes brainstorm.md content into
-        structured sections (Context, Goals, Decisions, Risks,
-        Migration). That transformation happens in the design step.
+        separate artifact that completes brainstorm.md in structured
+        sections (Context, Goals, Decisions, Risks, Migration). That
+        happens in the design step.
 
-      The brainstorming skill will:
-      1. Explore project context
-      2. Ask clarifying questions (one at a time)
-      3. Propose 2-3 approaches with trade-offs
-      4. Present design sections for approval
-      5. Output the validated design
+      What this step needs from the skill: an agreed description of the
+      change — intent and why, goals and non-goals, constraints, the
+      decisions taken and by whom, and open questions. Superpowers
+      versions shape that conversation differently; capture whatever the
+      skill agreed with the user.
+
+      IMPORTANT — next step (Superpowers 6.4 and later):
+      - In this schema the brainstorming skill's written design IS
+        brainstorm.md. Do not also write it under docs/superpowers/specs/.
+      - When the skill says the next step is `superpowers:writing-plans`,
+        that does not apply inside this schema: the next step is the
+        proposal artifact (`/opsx:continue`). writing-plans runs later, at
+        the `plan` step, after proposal, design, specs and tasks exist.
+      - If the skill sizes the work small (7+: "do it now" or "agree in
+        chat"; 6.x: spike or bounded), the change still goes through this
+        schema once it was opened; brainstorm.md is then short.
     requires: []
 
   - id: proposal
@@ -88,17 +98,14 @@ artifacts:
     instruction: |
       Create the design document explaining HOW to implement the change.
 
-      Read brainstorm.md as input. brainstorm.md is a raw capture of
-      the brainstorming skill's output (typically a decision log with
-      Q1-Qn decisions, trade-offs, and context). Your job is to
-      REORGANIZE that content into the structured sections below.
-
-      This is a transformation, not a copy. Extract and restructure:
-      - Decisions (Q1-Qn from brainstorm) → design.md §Decisions
-      - Background/context → design.md §Context
-      - Trade-offs → design.md §Risks / Trade-offs
-      - Add Goals/Non-Goals and Migration Plan (may require
-        inference from brainstorm.md content)
+      Read brainstorm.md as input. It holds what was agreed with the
+      user: a decision log (Superpowers 6.x) or a design document (7+).
+      Your job is to COMPLETE the technical design in the structured
+      sections below, not to copy it:
+      - Link or summarize what brainstorm.md already settles (context,
+        goals, decisions); do not duplicate it.
+      - Add what it leaves open: technical decisions with alternatives,
+        risks and trade-offs, migration and rollback, open questions.
 
       Sections:
       - **Context**: Background, current state, constraints, stakeholders
@@ -165,7 +172,7 @@ artifacts:
 
   - id: plan
     generates: plan.md
-    description: Micro-task implementation plan using Superpowers writing-plans
+    description: Step-by-step TDD implementation plan using Superpowers writing-plans
     template: plan.md
     instruction: |
       PRECHECK — required skill availability:
@@ -181,11 +188,11 @@ artifacts:
       - Do NOT write to `docs/superpowers/plans/`. Instead, write
         the plan directly to this change's `plan.md`.
 
-      The writing-plans skill will:
-      1. Read the tasks.md and design.md for context
-      2. Break each task into 2-5 minute micro-steps (TDD style)
-      3. Include exact file paths, code snippets, test commands
-      4. Add commit points after each task
+      What this step needs from the skill: an ordered implementation plan
+      for the tasks in tasks.md — the files, interfaces and test cases each
+      task touches, TDD-sized steps, and commit points — referencing the
+      specs and design.md in this change directory. Follow the skill's own
+      conventions for how much code a step carries.
 
       Pass the tasks.md content to the skill as the input for
       decomposition. The plan should reference the specs and
@@ -497,10 +504,10 @@ apply:
 
        Use the Skill tool to invoke
        **superpowers:subagent-driven-development** to execute
-       the plan.md micro-tasks with fresh subagents per task.
+       the plan.md steps with fresh subagents per task.
 
        Tell the executor:
-       - Read plan.md in this change directory for micro-tasks
+       - Read plan.md in this change directory for its steps
        - Update tasks.md checkboxes as coarse tasks complete
        - Work within the created worktree
 

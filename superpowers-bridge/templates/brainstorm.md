@@ -1,13 +1,14 @@
 <!--
 Raw capture of superpowers:brainstorming output.
 
-This file captures the brainstorming skill's output as is; no structure is enforced.
-The skill's natural output is usually a decision log (background → decision chain
-Q1-Qn → design trade-offs), but it may be organized differently depending on the
-conversation.
+This file holds the description the brainstorming skill agreed with the user,
+as the skill produced it; no structure is enforced. Older Superpowers versions
+tend to produce a decision log (background → decisions Q1-Qn → trade-offs);
+Superpowers 7+ writes a design document (intent, goals and non-goals,
+constraints, decisions, what is left to the builder). Either is fine.
 
-design.md extracts from this file and reorganizes it into a structured design document.
+design.md builds on this file: it completes the technical design with
+decisions, risks and migration where this file leaves them open.
 
-Do not copy this file's content into design.md — design.md is an independent,
-reorganized artifact; the two complement each other without overlapping.
+Do not copy this file into design.md; link or summarize what design.md needs.
 -->

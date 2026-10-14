@@ -2,8 +2,8 @@
 
 <!--
 Background, current state, constraints, stakeholders.
-brainstorm.md records the exploration (alternatives + chosen direction);
-this file takes the chosen direction and develops the full technical design.
+brainstorm.md records what was agreed with the user; this file completes the
+technical design where brainstorm.md leaves it open (decisions, risks, migration).
 -->
 
 ## Goals / Non-Goals
@@ -18,8 +18,8 @@ this file takes the chosen direction and develops the full technical design.
 
 <!--
 The single source of truth for every technical decision.
-brainstorm.md's Agreed Approach records which road was chosen;
-this section records how each fork along that road was decided.
+brainstorm.md records the direction that was agreed;
+this section records how each technical fork along it was decided.
 
 Suggested structure for each decision:
 ### D1: <decision title>
